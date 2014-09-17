@@ -29,6 +29,7 @@
 #include <Rinternals.h>
 
 #define BS 4096
+#define expiry_time_seconds 50
 
 int go;
 #ifdef Win32
@@ -125,7 +126,7 @@ void *ok(void *x)
   memset(set,0,BS);
   memset(expire,0,BS);
   snprintf(set,BS,"*3\r\n$3\r\nSET\r\n$%d\r\n%s\r\n$2\r\nOK\r\n", k, key);
-  snprintf(expire,BS,"*3\r\n$6\r\nEXPIRE\r\n$%d\r\n%s\r\n$1\r\n5\r\n", k, key);
+  snprintf(expire,BS,"*3\r\n$6\r\nEXPIRE\r\n$%d\r\n%s\r\n$1\r\n%d\r\n", k, key, expiry_time_seconds);
   m = 0;
 // Check for thread termination every 1/10 sec, but only update Redis
 // every 3s.
@@ -140,6 +141,7 @@ void *ok(void *x)
 #endif
       j = msg(s, expire, buf);
 #ifdef Win32
+k(
       if(j<0) ExitThread((DWORD)j);
 #else
       if(j<0) pthread_exit(&j);
