@@ -126,7 +126,7 @@ void *ok(void *x)
   memset(set,0,BS);
   memset(expire,0,BS);
   snprintf(set,BS,"*3\r\n$3\r\nSET\r\n$%d\r\n%s\r\n$2\r\nOK\r\n", k, key);
-  snprintf(expire,BS,"*3\r\n$6\r\nEXPIRE\r\n$%d\r\n%s\r\n$1\r\n%d\r\n", k, key, expiry_time_seconds);
+  snprintf(expire,BS,"*3\r\n$6\r\nEXPIRE\r\n$%d\r\n%s\r\n$%d\r\n%d\r\n", k, key,2, expiry_time_seconds);
   m = 0;
 // Check for thread termination every 1/10 sec, but only update Redis
 // every 3s.
